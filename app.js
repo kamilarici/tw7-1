@@ -69,7 +69,7 @@ const operator = (e) => {
     location.reload();
   }
 };
-
+//? to fixed  rakam nokta sonu ayarlaması yapıldı
 const calculate = (fNum, sNum, choosedOp) => {
   if (choosedOp === "+") return fNum + sNum;
   else if (choosedOp === "-") return (fNum - sNum).toFixed(2);
