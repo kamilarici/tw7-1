@@ -4,21 +4,30 @@ const bottomScreen = document.querySelector(".bottomScreen");
 const upScreen = document.querySelector(".upScreen");
 const allScreen = document.querySelector(".screen");
 const dote = document.querySelector(".dote");
+
 /* VARIABLES */
 let fNum = 0;
 let sNum = 0;
 let choosedOp = "";
 let result = 0;
+
 /* addEventListener */
 buttons.addEventListener("click", (e) => {
   addToBottom(e);
   operator(e);
 });
+
+bottomScreen.addEventListener("click", () => {
+  bottomScreen.innerText = bottomScreen.innerText.slice(0, -1);
+  console.log(bottomScreen.innerText);
+});
+
 /* FUNCTIONS */
 const addToBottom = (e) => {
   // if (!e.target.classList.contains("buttons")) {
   //   bottomScreen.innerText += e.target.innerText;
   // }
+
   if (!e.target.classList.contains("buttons")) {
     const buttonText = e.target.innerText;
     if (buttonText === "." && bottomScreen.innerText.includes(".")) {
@@ -28,6 +37,7 @@ const addToBottom = (e) => {
     bottomScreen.innerText += buttonText;
   }
 };
+
 const operator = (e) => {
   if (e.target.classList.contains("operator")) {
     upScreen.innerText = bottomScreen.innerText;
@@ -43,6 +53,13 @@ const operator = (e) => {
     upScreen.innerText += bottomScreen.innerText.slice(0, -1);
     sNum = Number(bottomScreen.innerText.slice(0, -1));
     bottomScreen.innerText = calculate(fNum, sNum, choosedOp);
+    if (
+      bottomScreen.innerText === "undefined" &&
+      e.target.classList.contains("equal")
+    ) {
+      alert("deger gir");
+      bottomScreen.innerText = "";
+    }
   } else if (e.target.classList.contains("clear")) {
     fNum = 0;
     sNum = 0;
@@ -52,10 +69,16 @@ const operator = (e) => {
     location.reload();
   }
 };
+
 const calculate = (fNum, sNum, choosedOp) => {
   if (choosedOp === "+") return fNum + sNum;
-  else if (choosedOp === "-") return fNum - sNum;
-  else if (choosedOp === "÷") return fNum / sNum;
-  else if (choosedOp === "x") return fNum * sNum;
+  else if (choosedOp === "-") return (fNum - sNum).toFixed(2);
+  else if (choosedOp === "÷") {
+    if (sNum === 0) {
+      return "HATA!!!";
+    } else {
+      return (fNum / sNum).toFixed(5);
+    }
+  } else if (choosedOp === "x") return (fNum * sNum).toFixed(2);
   else if (choosedOp === "%") return (fNum * sNum) / 100;
 };
