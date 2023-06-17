@@ -75,6 +75,7 @@ const calculate = (fNum, sNum, choosedOp) => {
   else if (choosedOp === "-") return (fNum - sNum).toFixed(2);
   else if (choosedOp === "÷") {
     if (sNum === 0) {
+      //? bölü sıfır olduğunda
       return "HATA!!!";
     } else {
       return (fNum / sNum).toFixed(5);
